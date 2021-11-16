@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J15Event05.html</title>
+    <script>
+        /*
+        키보드 이벤트
+        keydown : 키보드를 누를때 발생하는 이벤트. 한글과 함께
+            shift와 같은 특수키도 인식할 수 있다.
+        keyup : 키보드를 눌렀다가 땠을대 발생하는 이벤트 keydown과 인식하는
+            키는 동일하다
+        keypress : keydown과 동일한 이벤트이지만 shift와 같은 특수키는 인식하지 
+            못하고, 문자키만 인식한다. + 한글도 인식하지 않는다.
+        */
+        var count = 0;
+
+        function fnKeyHandler(flag){
+
+            count++;
+            var spanTag = document.getElementById("span");
+            switch(flag){
+                case 1:
+                    spanTag.innerHTML = "keydown 이벤트 발생"+ count;
+                    break;
+                case 2:
+                    spanTag.innerHTML = "keypress 이벤트 발생"+ count;
+                    break;
+                case 3:
+                    spanTag.innerHTML = "keyup 이벤트 발생"+ count;
+                    break;
+            }
+        }
+
+        function fnKeyEvent(){
+            var span = document.getElementById("keySpan");
+            //키보드 이벤트 발생시 눌러진 키보드의 코드값을 반환한다.
+            var keycode = event.keyCode;
+            //얻어온 키코드 값을 span태그에 삽입한다.
+            span.innerHTML = keycode;
+            //지정한 키보드를 웹페이지에서 막아야 할 때 리스너 쪽으로 false를 반환한다.
+            if(keycode==116 || keycode==8){
+                alert("해당 문서에서는 F5, Backspace는"+ "사용할 수 없습니다.");
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>키보드 이벤트</h2>
+
+    <h3>Key 이벤트 테스트</h3>
+    keydown : <input type="text" onkeydown="fnKeyHandler(1);">
+    <br>
+    keypress : <input type="text" onkeypress="fnKeyHandler(2);">
+    <br>
+    keyup : <input type="text" onkeyup="fnKeyHandler(3);">
+    <br>
+    <span id="span" style="font-size: 1.5em;color: red;"></span>
+
+    <h3>keyCode 이용하여 현재키 알아내기</h3>
+    F5와 Backspace키는 사용불가합니다.
+    <br>
+    <input type="text" onkeydown="return fnKeyEvent();">
+    <br>
+    <span id="keySpan" style="color: blue; font-size: 1.5em;"></span>
+
+    <script>
+        // function fnJuminFocus(){
+        //     var obj1 = document.getElementById("ju1");
+        //     var strLength = obj1.value.length;
+        //     console.log("입력한글자의길이", strLength);
+        //     if(strLength >= 6){
+        //         document.getElementById("ju2").focus();
+        //     }
+        //     var obj2 = document.getElementById("ju2");
+        //     var strLength2 = obj2.value.length;
+        //     if(strLength2 >= 7){
+        //         document.getElementById("tell1").focus();
+        //     }
+        // }
+        // // function fnTellFocus(){
+        // //     var obj1 = document.getElementById("tell1");
+        // //     var strLength = obj1.value.length;
+        // //     console.log("입력한글자의길이", strLength);
+        // //     if(strLength >= 3){
+        // //         document.getElementById("tell2").focus();
+        // //     }
+        // //     var obj2 = document.getElementById("tell2");
+        // //     var strLength2 = obj2.value.length;
+        // //     console.log("입력한글자의길이", strLength);
+        // //     if(strLength2 >= 4){
+        // //         document.getElementById("tell3").focus();
+        // //     }
+        // }
+        function fnJuminFocus(){
+            //주민번호 앞자리의 DOM을 얻어온다.
+            var obj1 = document.getElementById("ju1");
+            //입려한 글자수를 확인한다.
+            var strLength = obj1.value.length;
+            console.log("입력한글자의길이1", strLength);
+            //입력한 글자수가 6보다 크다면 포커스를 이동한다.
+            if(strLength >= 6){
+                document.getElementById("ju2").focus();
+            }
+        }
+        /*앞에서 정의한 함수를 공용으로 사용하기 위해 엘리먼트 아이디와 글자수 부분을
+        매개변수로 처리해서 재 정의한 함수.
+        commonFocusMove(현재 입력중인 엘리먼트, 입력할 글자 수, 이동할 엘리먼트)
+        */
+        function commonFocusMove(thisObj, numLength, nextObj){
+            var obj2 = document.getElementById(thisObj);
+            var strLength = obj2.value.length;
+            console.log("입력한글자의길이2", strLength);
+            if(strLength >= numLength){
+                document.getElementById(nextObj).focus();
+            }
+        }
+    </script>
+    <h3>특정 조건에서 포커스 이동하기</h3>
+    <!-- 
+        시나리오] 주민등록번호 앞의 6자리를 입력하면 뒷자리로 포커스가
+            자동으로 이동하는 함수를 작성하시오.
+     -->
+    <h4>주민등록번호 입력하기</h4>
+    <input type="text" id="ju1" size="6" onkeyup="fnJuminFocus();" maxlength="6"> -
+    <input type="text" id="ju2" size="7" onkeyup="commonFocusMove('ju2',7,'tell1');"> 
+    
+    <!-- 
+        연습문제] 앞에서와 마찬가지로 주민번호뒤 7자리를 입력하면 전화번호의 첫번째로
+            이동하고, 그다음 tell1에서 tell3까지 차례대로 작성할 수 있도록 이동하는
+            함수를 생성하시오.
+     -->
+    <h4>휴대전화번호 입력하기</h4>
+    <input type="text" id="tell1" size="3" onkeyup="commonFocusMove('tell1',3,'tell2');"> -
+    <input type="text" id="tell2" size="4" onkeyup="commonFocusMove('tell2',4,'tell3');"> -
+    <input type="text" id="tell3" size="4" maxlength="4">
+
+</body>
+</html>

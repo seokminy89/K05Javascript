@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qu13.html</title>
+    <script>
+        /*
+        다음 쿼리스트링을 &문자를 기준으로 분할하여 출력하는 프로그램을 작성하시오.
+        ki_story.html?mode=view&tname=interview&idx=520&page=1&keyfield=name&keystring=홍길동
+        */
+       var queryString = prompt("&구분자가 있는 문자열 입력", "ki_story.html?mode=view&tname=interview&idx=520&page=1&keyfield=name&keystring=홍길동")
+       var strArr = queryString.split("&");
+       for(var i =0 ; i<strArr.length ;i++){
+           document.write(strArr[i]+"<br>");
+       }
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

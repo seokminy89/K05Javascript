@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qu11.html</title>
+</head>
+<body>
+<div id="Allwrap">
+    <!-- 
+        Date()객체를 사용하여 배경색이 오전이면 lightskyblue, 오후면 orange로 바뀌는 프로그램을 작성하시오.
+     -->
+
+     <h2>오전이면 lightskyblue, 오후면 orange</h2>
+     <hr>
+     <script>
+         var date = new Date();
+         if(date.getHours() < 12){
+            //오전일때
+            //특정 아이디를 통해 DOM을 얻어온 후 배경색 설정
+            document.getElementById("Allwrap").style.backgroundColor = "lightskyblue"
+            //body태그 자체를 얻어온 후 배경색 설정
+            document.body.style.backgroundColor = "lightskyblue";
+        }
+        else{
+            //오후일때
+            document.getElementById("Allwrap").style.backgroundColor = "orange"
+            document.body.style.backgroundColor = "orange";
+         }
+     </script>
+</div>
+</body>
+</html>
